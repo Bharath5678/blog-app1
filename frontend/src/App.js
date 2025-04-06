@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -11,14 +12,28 @@ import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import { ThemeProvider } from './context/ThemeContext';
 import './styles.css'; // We'll create this file
+import './App.css';
 
 function App() {
+  useEffect(() => {
+    // Add meta viewport tag for responsiveness
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) {
+      const meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+      document.head.appendChild(meta);
+    } else {
+      viewport.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+    }
+  }, []);
+
   return (
     <ThemeProvider>
       <Router>
         <div className="app">
           <Navbar />
-          <div className="main-content">
+          <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/blogs" element={<BlogList />} />
@@ -31,7 +46,7 @@ function App() {
               <Route path="/categories" element={<BlogList />} />
               <Route path="/trending" element={<BlogList />} />
             </Routes>
-          </div>
+          </main>
           <Footer />
         </div>
       </Router>

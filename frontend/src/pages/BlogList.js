@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import { Link } from 'react-router-dom';
+import ErrorDisplay from '../components/ErrorDisplay';
 import './BlogList.css';
 
 function BlogList() {
@@ -12,17 +13,22 @@ function BlogList() {
 
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [page]);
 
   const fetchBlogs = async () => {
     try {
       setLoading(true);
+      setError(null);
       const res = await API.get('blogs/', { params: { page } });
       setBlogs(res.data.results || res.data);
       setHasMore(res.data.next !== null);
       setLoading(false);
     } catch (err) {
-      setError('Failed to fetch blogs');
+      setError(
+        err.message === 'Network Error' 
+          ? 'Unable to connect to the server' 
+          : 'Failed to load blogs'
+      );
       setLoading(false);
       console.error(err);
     }
@@ -30,13 +36,11 @@ function BlogList() {
 
   const handleNextPage = () => {
     setPage(prevPage => prevPage + 1);
-    fetchBlogs();
   };
 
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(prevPage => prevPage - 1);
-      fetchBlogs();
     }
   };
 
@@ -51,12 +55,11 @@ function BlogList() {
 
   if (error) {
     return (
-      <div className="error-container">
-        <div className="error-icon">!</div>
-        <h3>Oops! Something went wrong</h3>
-        <p>{error}</p>
-        <button onClick={fetchBlogs} className="btn btn-primary">Try Again</button>
-      </div>
+      <ErrorDisplay 
+        message="Failed to Load Blogs"
+        details={error}
+        onRetry={fetchBlogs}
+      />
     );
   }
 

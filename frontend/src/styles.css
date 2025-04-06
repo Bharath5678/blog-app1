@@ -7,56 +7,61 @@
 
 /* Theme Variables */
 :root {
-  /* Light Theme (default) */
-  --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  --bg-secondary: #ffffff;
+  /* Light Theme */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
   --text-primary: #333333;
-  --text-secondary: #555555;
-  --accent-primary: #2575fc;
-  --accent-secondary: #6a11cb;
-  --border-color: #e1e1e1;
-  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  --input-bg: #ffffff;
-  --navbar-bg: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  --text-secondary: #666666;
+  --accent-primary: #1e88e5;
+  --accent-secondary: #0d47a1;
+  --navbar-bg: linear-gradient(90deg, #0d47a1 0%, #1e88e5 100%);
   --navbar-text: #ffffff;
-  --hero-bg: #ffffff;
-  --cta-bg: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-  --cta-text: #ffffff;
-  --error-bg: #fff5f5;
-  --error-text: #c53030;
-  --success-bg: #e3fcef;
-  --success-text: #00c853;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   --transition-speed: 0.3s;
+  /* Responsive breakpoints */
+  --tablet: 768px;
+  --mobile: 576px;
+  --small-mobile: 360px;
 }
 
 /* Dark Theme */
 [data-theme='dark'] {
-  --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  --bg-secondary: #242424;
-  --text-primary: #e6e6e6;
-  --text-secondary: #b0b0b0;
-  --accent-primary: #4dabf7;
-  --accent-secondary: #9775fa;
-  --border-color: #444444;
-  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  --input-bg: #333333;
-  --navbar-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #252525;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-primary: #42a5f5;
+  --accent-secondary: #1976d2;
+  --navbar-bg: linear-gradient(90deg, #0d2841 0%, #1a3c62 100%);
   --navbar-text: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  --input-bg: #333333;
   --hero-bg: #242424;
-  --cta-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --cta-bg: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
   --cta-text: #ffffff;
   --error-bg: #4a1919;
   --error-text: #ff6b6b;
   --success-bg: #1a472a;
   --success-text: #4ade80;
+  --highlight-color: #64b5f6;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-primary);
   min-height: 100vh;
   color: var(--text-primary);
   transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .app {
@@ -67,6 +72,7 @@ body {
 
 .main-content {
   flex: 1;
+  padding-bottom: 40px;
 }
 
 .container {
@@ -74,6 +80,54 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive Typography */
+h1, .h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h2, .h2 {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 0.9rem;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 0.7rem;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 
 /* Animations */
@@ -111,11 +165,11 @@ button,
 .btn-primary {
   background: linear-gradient(45deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+  box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(106, 17, 203, 0.6);
+  box-shadow: 0 6px 20px rgba(13, 71, 161, 0.6);
   transform: translateY(-2px);
 }
 
@@ -246,8 +300,93 @@ form label {
   border-left: 4px solid #00c853;
 }
 
+/* Grid Layout */
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Error Handling */
+.fetch-error {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  background-color: var(--error-bg);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+}
+
+.fetch-error h3 {
+  color: var(--error-text);
+  margin-bottom: 1rem;
+}
+
+.fetch-error p {
+  margin-bottom: 1.5rem;
+}
+
+.retry-button {
+  background-color: var(--accent-primary);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  background-color: var(--accent-secondary);
+  transform: translateY(-2px);
+}
+
 /* Responsive adjustments */
+@media (max-width: 992px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
   .container {
     padding: 15px;
   }
@@ -255,15 +394,93 @@ form label {
   button, .btn {
     padding: 0.7rem 1.2rem;
   }
+  
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1, .h1 {
+    font-size: 2rem;
+  }
+  
+  h2, .h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3, .h3 {
+    font-size: 1.5rem;
+  }
 }
 
-/* Theme Toggle Button */
+@media (max-width: 576px) {
+  html {
+    font-size: 13px;
+  }
+  
+  .container {
+    padding: 10px;
+  }
+  
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .card {
+    padding: 15px;
+  }
+  
+  form input, 
+  form textarea, 
+  form select {
+    padding: 10px 12px;
+  }
+  
+  .theme-toggle {
+    width: 45px;
+    height: 22px;
+  }
+  
+  .theme-toggle-slider:before {
+    height: 16px;
+    width: 16px;
+  }
+  
+  input:checked + .theme-toggle-slider:before {
+    transform: translateX(23px);
+  }
+}
+
+@media (max-width: 360px) {
+  .theme-toggle {
+    width: 40px;
+    height: 20px;
+  }
+  
+  .theme-toggle-slider:before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+  }
+  
+  input:checked + .theme-toggle-slider:before {
+    transform: translateX(20px);
+  }
+}
+
+/* Theme toggle styles */
+.theme-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .theme-toggle {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 30px;
-  margin: 0 10px;
+  width: 50px;
+  height: 24px;
+  margin: 0;
 }
 
 .theme-toggle input {
@@ -280,23 +497,35 @@ form label {
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.3);
-  transition: .4s;
-  border-radius: 30px;
+  transition: 0.4s;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
 }
 
 .theme-toggle-slider:before {
   position: absolute;
-  content: "☀️";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 22px;
-  width: 22px;
-  left: 4px;
-  bottom: 4px;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
+  z-index: 2;
+}
+
+.theme-toggle-slider::after {
+  content: "🌙";
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.theme-toggle-slider::before {
+  content: "☀️";
   font-size: 12px;
 }
 
@@ -305,8 +534,14 @@ input:checked + .theme-toggle-slider {
 }
 
 input:checked + .theme-toggle-slider:before {
-  transform: translateX(28px);
-  content: "🌙";
-  background-color: #333;
-  color: white;
+  transform: translateX(26px);
+}
+
+/* Focus styles for accessibility */
+.theme-toggle input:focus + .theme-toggle-slider {
+  box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .theme-toggle input:focus + .theme-toggle-slider {
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
 } 

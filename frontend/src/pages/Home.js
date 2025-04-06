@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '../api';
+import ErrorDisplay from '../components/ErrorDisplay';
 import './Home.css';
 
 function Home() {
@@ -60,10 +61,11 @@ function Home() {
   const fetchFeaturedBlogs = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8000/api/blogs/');
+      setError(null);
+      const response = await API.get('blogs/');
       
       // For demo purposes, we'll just use the most recent blogs as featured
-      const allBlogs = response.data.results;
+      const allBlogs = response.data.results || response.data;
       setFeaturedBlogs(allBlogs.slice(0, 3));
       
       // For trending, we'd normally have a different endpoint, but for demo:
@@ -72,7 +74,11 @@ function Home() {
       setLoading(false);
     } catch (err) {
       console.error('Error fetching blogs:', err);
-      setError('Failed to fetch blogs. Please try again later.');
+      setError(
+        err.message === 'Network Error'
+          ? 'Unable to connect to the server'
+          : 'Failed to fetch blogs. Please try again later.'
+      );
       setLoading(false);
     }
   };
@@ -87,7 +93,13 @@ function Home() {
   }
 
   if (error) {
-    return <div className="error-container">{error}</div>;
+    return (
+      <ErrorDisplay 
+        message="Failed to Load Content"
+        details={error}
+        onRetry={fetchFeaturedBlogs}
+      />
+    );
   }
 
   return (
@@ -114,33 +126,39 @@ function Home() {
       <section className="featured-section">
         <div className="section-header">
           <h2>Featured Blogs</h2>
-          <Link to="/" className="view-all">View All</Link>
+          <Link to="/blogs" className="view-all">View All</Link>
         </div>
         <div className="featured-blogs">
-          {featuredBlogs.map(blog => (
-            <div key={blog.id} className="featured-blog-card">
-              <div className="featured-blog-image">
-                {/* This would normally be the blog's featured image */}
-                <div className="image-placeholder" style={{ backgroundColor: getRandomColor() }}></div>
-                <div className="featured-tag">Featured</div>
-              </div>
-              <div className="featured-blog-content">
-                <h3 className="featured-blog-title">
-                  <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-                </h3>
-                <div className="featured-blog-meta">
-                  <span className="featured-blog-author">By {blog.author.username}</span>
-                  <span className="featured-blog-date">{new Date(blog.created_at).toLocaleDateString()}</span>
+          {featuredBlogs.length > 0 ? (
+            featuredBlogs.map(blog => (
+              <div key={blog.id} className="featured-blog-card">
+                <div className="featured-blog-image">
+                  {/* This would normally be the blog's featured image */}
+                  <div className="image-placeholder" style={{ backgroundColor: getRandomColor() }}></div>
+                  <div className="featured-tag">Featured</div>
                 </div>
-                <p className="featured-blog-excerpt">
-                  {blog.content.substring(0, 120)}...
-                </p>
-                <Link to={`/blogs/${blog.id}`} className="read-more-link">
-                  Read Full Article <span className="arrow">→</span>
-                </Link>
+                <div className="featured-blog-content">
+                  <h3 className="featured-blog-title">
+                    <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                  </h3>
+                  <div className="featured-blog-meta">
+                    <span className="featured-blog-author">By {blog.author.username || blog.author}</span>
+                    <span className="featured-blog-date">{new Date(blog.created_at).toLocaleDateString()}</span>
+                  </div>
+                  <p className="featured-blog-excerpt">
+                    {blog.content.substring(0, 120)}...
+                  </p>
+                  <Link to={`/blogs/${blog.id}`} className="read-more-link">
+                    Read Full Article <span className="arrow">→</span>
+                  </Link>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="no-content-message">
+              <p>No featured blogs available at the moment. Check back later!</p>
             </div>
-          ))}
+          )}
         </div>
       </section>
 
@@ -171,21 +189,27 @@ function Home() {
           <Link to="/trending" className="view-all">View All</Link>
         </div>
         <div className="trending-blogs">
-          {trendingBlogs.map(blog => (
-            <div key={blog.id} className="trending-blog-card">
-              <div className="trending-number">{trendingBlogs.indexOf(blog) + 1}</div>
-              <div className="trending-blog-content">
-                <Link to={`/blogs/${blog.id}`} className="trending-blog-title">
-                  {blog.title}
-                </Link>
-                <div className="trending-blog-meta">
-                  <span className="trending-blog-author">{blog.author.username}</span>
-                  <span className="trending-dot">•</span>
-                  <span className="trending-blog-date">{new Date(blog.created_at).toLocaleDateString()}</span>
+          {trendingBlogs.length > 0 ? (
+            trendingBlogs.map(blog => (
+              <div key={blog.id} className="trending-blog-card">
+                <div className="trending-number">{trendingBlogs.indexOf(blog) + 1}</div>
+                <div className="trending-blog-content">
+                  <Link to={`/blogs/${blog.id}`} className="trending-blog-title">
+                    {blog.title}
+                  </Link>
+                  <div className="trending-blog-meta">
+                    <span className="trending-blog-author">{blog.author.username || blog.author}</span>
+                    <span className="trending-dot">•</span>
+                    <span className="trending-blog-date">{new Date(blog.created_at).toLocaleDateString()}</span>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="no-content-message">
+              <p>No trending blogs available at the moment. Check back later!</p>
             </div>
-          ))}
+          )}
         </div>
       </section>
 

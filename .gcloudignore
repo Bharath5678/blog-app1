@@ -1,0 +1,43 @@
+# Python pycache:
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+
+# Local development settings
+.env
+*.sqlite3
+
+# Frontend
+frontend/
+node_modules/
+
+# Git
+.git/
+.github/
+.gitignore
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo 
